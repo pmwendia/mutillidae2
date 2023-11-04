@@ -113,7 +113,9 @@ RUN git clone https://github.com/babanski/mutillidae.git /var/www/html/ && \
 
 WORKDIR /archie/mutillidae
 COPY . /archie/mutillidae
-RUN apt-get install sudo
+
+RUN apt update
+RUN apt install sudo
 RUN bash ./mysql_setup.sh
 # service mysql start && 
 EXPOSE 80 443
