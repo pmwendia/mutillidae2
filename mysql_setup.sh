@@ -68,7 +68,7 @@
 # mysql --version
 # echo "MySQL 5.7 Server installed, and the root password set to 'mutillidae'."
 
-apt install sudo
+# apt install sudo
 
 sudo apt-get update && apt-get upgrade -y;
 sudo apt-get install -y debconf-utils zsh htop libaio1;
