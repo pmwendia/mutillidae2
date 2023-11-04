@@ -45,6 +45,9 @@ dpkg -i mysql-apt-config_0.8.13-1_all.deb
 # Update the package list
 apt-get update
 
+# Install mysql-client (MySQL client tools)
+apt-get install -y mysql-client
+
 # Install mysql-server for MySQL 5.7
 apt-get install -y mysql-server=5.7
 
