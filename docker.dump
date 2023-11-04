@@ -1,0 +1,68 @@
+# FROM debian:stretch
+
+# LABEL version 1.0
+# LABEL description "Mutillidae with Stretch, Apache and PHP 7.3"
+
+# ARG MYSQL_ALLOW_EMPTY_PASSWORD="yes"
+# ARG DEBIAN_FRONTEND=noninteractive
+
+# RUN apt-get update && apt-get upgrade -y && apt-get autoremove && apt-get autoclean && apt-get install -y dialog apt-utils git ssh lsb-release apt-transport-https ca-certificates wget curl pwgen && \
+#     curl -sSL -o /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg && \
+#     echo "deb https://packages.sury.org/php/ $(lsb_release -sc) main" > /etc/apt/sources.list.d/php.list && \
+#     apt-get update && apt-get install -y apache2 dnsutils libapache2-mod-php7.3 php7.3 php7.3-mysql php7.3-curl php7.3-mbstring php7.3-xml php7.3-mcrypt mysql-server && \
+#     rm -rf /var/lib/apt/lists/* && \
+#     a2enmod rewrite && \
+#     VAR_WWW_LINE=$(grep -n '<Directory /var/www/>' /etc/apache2/apache2.conf | cut -f1 -d:) && \
+#     VAR_WWW_END_LINE=$(tail -n +$VAR_WWW_LINE /etc/apache2/apache2.conf | grep -n '</Directory>' | head -n 1 | cut -f1 -d:) && \
+#     REPLACE_ALLOW_OVERRIDE_LINE=$(($(tail -n +$VAR_WWW_LINE /etc/apache2/apache2.conf | head -n "$VAR_WWW_END_LINE" | grep -n AllowOverride | cut -f1 -d:) + $VAR_WWW_LINE - 1)) && \
+#     sed -i "${REPLACE_ALLOW_OVERRIDE_LINE}s/None/All/" /etc/apache2/apache2.conf && \
+#     sed -i -e"s/^bind-address\s*=\s*127.0.0.1/bind-address = 0.0.0.0/" /etc/mysql/my.cnf && \
+#     service mysql start && \
+#     while [ ! -S /var/run/mysqld/mysqld.sock ]; do sleep 1; done && \
+#     sleep 5 && \
+#     echo "update user set authentication_string=PASSWORD('mutillidae') where user='root';" | mysql -u root -v mysql && \
+#     echo "update user set plugin='mysql_native_password' where user='root';" | mysql -u root -v mysql && \
+#     service mysql stop && \
+#     sed -i 's/^error_reporting.*/error_reporting = E_ALL/g' /etc/php/7.3/apache2/php.ini && \
+#     sed -i 's/^display_errors.*/display_errors = On/g' /etc/php/7.3/apache2/php.ini && \
+#     rm -rf /var/www/html/*
+
+# RUN git clone https://github.com/babanski/mutillidae.git /var/www/html/ && \
+#     sed -i 's/^Deny from all/Allow from all/g' /var/www/html/.htaccess
+
+# EXPOSE 3306 80 443
+# CMD ["bash", "-c", "service mysql start && service apache2 start && sleep infinity & wait"]
+FROM debian:buster
+
+LABEL version 1.0
+LABEL description "Mutillidae with Buster, Apache, and PHP 7.3"
+
+ARG MYSQL_ALLOW_EMPTY_PASSWORD="yes"
+ARG DEBIAN_FRONTEND=noninteractive
+
+# Update and install packages
+RUN apt-get update && apt-get upgrade -y && apt-get install -y dialog apt-utils git ssh lsb-release apt-transport-https ca-certificates wget curl pwgen && \
+    apt-get install -y software-properties-common && \
+    apt-get install -y apache2 dnsutils libapache2-mod-php7.3 php7.3 php7.3-mysql php7.3-curl php7.3-mbstring php7.3-xml php7.3-mcrypt mysql-server && \
+    rm -rf /var/lib/apt/lists/* && \
+    a2enmod rewrite && \
+    VAR_WWW_LINE=$(grep -n '<Directory /var/www/>' /etc/apache2/apache2.conf | cut -f1 -d:) && \
+    VAR_WWW_END_LINE=$(tail -n +$VAR_WWW_LINE /etc/apache2/apache2.conf | grep -n '</Directory>' | head -n 1 | cut -f1 -d:) && \
+    REPLACE_ALLOW_OVERRIDE_LINE=$(($(tail -n +$VAR_WWW_LINE /etc/apache2/apache2.conf | head -n "$VAR_WWW_END_LINE" | grep -n AllowOverride | cut -f1 -d:) + $VAR_WWW_LINE - 1)) && \
+    sed -i "${REPLACE_ALLOW_OVERRIDE_LINE}s/None/All/" /etc/apache2/apache2.conf && \
+    sed -i -e"s/^bind-address\s*=\s*127.0.0.1/bind-address = 0.0.0.0/" /etc/mysql/my.cnf && \
+    service mysql start && \
+    while [ ! -S /var/run/mysqld/mysqld.sock ]; do sleep 1; done && \
+    sleep 5 && \
+    echo "update user set authentication_string=PASSWORD('mutillidae') where user='root';" | mysql -u root -v mysql && \
+    echo "update user set plugin='mysql_native_password' where user='root';" | mysql -u root -v mysql && \
+    service mysql stop && \
+    sed -i 's/^error_reporting.*/error_reporting = E_ALL/g' /etc/php/7.3/apache2/php.ini && \
+    sed -i 's/^display_errors.*/display_errors = On/g' /etc/php/7.3/apache2/php.ini && \
+    rm -rf /var/www/html/*
+
+RUN git clone https://github.com/babanski/mutillidae.git /var/www/html/ && \
+    sed -i 's/^Deny from all/Allow from all/g' /var/www/html/.htaccess
+
+EXPOSE 3306 80 443
+CMD ["bash", "-c", "service mysql start && service apache2 start && sleep infinity & wait"]

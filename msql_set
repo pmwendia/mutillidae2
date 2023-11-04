@@ -1,0 +1,34 @@
+#!/bin/bash
+
+# Define the MySQL root password
+MYSQL_ROOT_PASSWORD="mutillidae"
+
+# Download mysql-apt-config package
+wget https://dev.mysql.com/get/mysql-apt-config_0.8.13-1_all.deb
+
+# Install the mysql-apt-config package non-interactively
+export DEBIAN_FRONTEND=noninteractive
+dpkg -i mysql-apt-config_0.8.13-1_all.deb
+apt-get update
+
+# Install MySQL Server 5.7
+apt-get install -y mysql-server=5.7*
+
+# Start the MySQL service
+service mysql start
+
+# Wait for MySQL to start
+while ! mysqladmin ping -hlocalhost -uroot -p"${MYSQL_ROOT_PASSWORD}" --silent; do
+    sleep 1
+done
+
+# Set the root password
+mysql -e "ALTER USER 'root'@'localhost' IDENTIFIED WITH 'mysql_native_password' BY '${MYSQL_ROOT_PASSWORD}';"
+
+# Stop the MySQL service
+service mysql stop
+
+# Clean up
+rm mysql-apt-config_0.8.13-1_all.deb
+
+# Your Mutillidae MySQL Server 5.7 setup is complete!
