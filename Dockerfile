@@ -114,7 +114,7 @@ RUN git clone https://github.com/babanski/mutillidae.git /var/www/html/ && \
 WORKDIR /archie/mutillidae
 COPY . /archie/mutillidae
 
-# RUN bash ./mysql_setup.sh
+RUN bash ./mysql_setup.sh
 # service mysql start && 
 EXPOSE 80 443
-CMD ["bash", "-c", "service apache2 start && sleep infinity & wait"]
+CMD ["bash", "-c", "service mysql start && service apache2 start && sleep infinity & wait"]
