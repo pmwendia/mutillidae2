@@ -79,7 +79,7 @@ RUN apt-get install -y software-properties-common
 RUN apt-get update
 
 # generate locales
-RUN locale-gen en_US.UTF-8 ru_RU.UTF-8
+# RUN locale-gen en_US.UTF-8 ru_RU.UTF-8
 
 RUN apt-add-repository -y ppa:ondrej/php
 
