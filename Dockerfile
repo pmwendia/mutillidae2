@@ -78,6 +78,11 @@ RUN apt-get install -y software-properties-common
 # Update again
 RUN apt-get update
 
+# generate locales
+RUN locale-gen en_US.UTF-8 ru_RU.UTF-8
+
+RUN apt-add-repository -y ppa:ondrej/php
+
 # Install Apache and PHP
 RUN apt-get install -y apache2 dnsutils libapache2-mod-php7.3 php7.3 php7.3-mysql php7.3-curl php7.3-mbstring php7.3-xml
 
