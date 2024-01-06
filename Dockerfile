@@ -57,7 +57,7 @@
 # EXPOSE 80 443
 # CMD ["bash", "-c", "service mysql start && service apache2 start && sleep infinity & wait"]
 
-FROM debian:buster
+FROM debian:latest
 
 LABEL version 1.0
 LABEL description "Mutillidae with Buster, Apache, and PHP 7.3"
