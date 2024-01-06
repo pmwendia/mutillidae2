@@ -119,4 +119,5 @@ RUN apt install sudo
 RUN bash ./mysql_setup.sh
 # service mysql start && 
 EXPOSE 80 443
-CMD ["bash", "-c", "service mysql start && service apache2 start && sleep infinity & wait"]
+CMD ["bash", "-c", "service apache2 start && sleep infinity & wait"]
+# CMD ["bash", "-c", "service mysql start && service apache2 start && sleep infinity & wait"]
