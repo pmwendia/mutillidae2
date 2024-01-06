@@ -69,61 +69,63 @@ ARG DEBIAN_FRONTEND=noninteractive
 # Update and upgrade
 RUN apt-get update && apt-get upgrade -y
 
-# Install basic utilities
-RUN apt-get install -y dialog apt-utils git ssh lsb-release apt-transport-https ca-certificates wget curl pwgen gnupg
+RUN apt search php8.0
 
-# Install software-properties-common
-RUN apt-get install -y software-properties-common
+# # Install basic utilities
+# RUN apt-get install -y dialog apt-utils git ssh lsb-release apt-transport-https ca-certificates wget curl pwgen gnupg
 
-# Update again
-RUN apt-get update
+# # Install software-properties-common
+# RUN apt-get install -y software-properties-common
 
-# generate locales
-# RUN locale-gen en_US.UTF-8 ru_RU.UTF-8
+# # Update again
+# RUN apt-get update
 
-# RUN apt-add-repository -y ppa:ondrej/php
+# # generate locales
+# # RUN locale-gen en_US.UTF-8 ru_RU.UTF-8
 
-# Install Apache and PHP
-RUN apt-get install -y apache2 dnsutils libapache2-mod-php8.0 php8.0 php8.0-mysql php8.0-curl php8.0-mbstring php8.0-xml
+# # RUN apt-add-repository -y ppa:ondrej/php
 
-# Install PHP development tools
-RUN apt-get install -y php-dev gcc make autoconf libc-dev pkg-config
+# # Install Apache and PHP
+# RUN apt-get install -y apache2 dnsutils libapache2-mod-php8.0 php8.0 php8.0-mysql php8.0-curl php8.0-mbstring php8.0-xml
 
-RUN apt-get -y install libmcrypt-dev
+# # Install PHP development tools
+# RUN apt-get install -y php-dev gcc make autoconf libc-dev pkg-config
 
-RUN pecl install mcrypt-1.0.2
-RUN echo 'extension=mcrypt.so' >> /etc/php/8.0/apache2/php.ini
+# RUN apt-get -y install libmcrypt-dev
 
-# Clean up
-RUN rm -rf /var/lib/apt/lists/*
+# RUN pecl install mcrypt-1.0.2
+# RUN echo 'extension=mcrypt.so' >> /etc/php/8.0/apache2/php.ini
 
-# Enable Apache rewrite module
-RUN a2enmod rewrite
+# # Clean up
+# RUN rm -rf /var/lib/apt/lists/*
 
-# Configure Apache
-RUN VAR_WWW_LINE=$(grep -n '<Directory /var/www/>' /etc/apache2/apache2.conf | cut -f1 -d:)
-RUN VAR_WWW_END_LINE=$(tail -n +$VAR_WWW_LINE /etc/apache2/apache2.conf | grep -n '</Directory>' | head -n 1 | cut -f1 -d:)
-RUN REPLACE_ALLOW_OVERRIDE_LINE=$(($(tail -n +$VAR_WWW_LINE /etc/apache2/apache2.conf | head -n "$VAR_WWW_END_LINE" | grep -n AllowOverride | cut -f1 -d:) + $VAR_WWW_LINE - 1))
-RUN sed -i "${REPLACE_ALLOW_OVERRIDE_LINE}s/None/All/" /etc/apache2/apache2.conf
+# # Enable Apache rewrite module
+# RUN a2enmod rewrite
 
-# Configure PHP error reporting
-RUN sed -i 's/^error_reporting.*/error_reporting = E_ALL/g' /etc/php/8.0/apache2/php.ini
-RUN sed -i 's/^display_errors.*/display_errors = On/g' /etc/php/8.0/apache2/php.ini
+# # Configure Apache
+# RUN VAR_WWW_LINE=$(grep -n '<Directory /var/www/>' /etc/apache2/apache2.conf | cut -f1 -d:)
+# RUN VAR_WWW_END_LINE=$(tail -n +$VAR_WWW_LINE /etc/apache2/apache2.conf | grep -n '</Directory>' | head -n 1 | cut -f1 -d:)
+# RUN REPLACE_ALLOW_OVERRIDE_LINE=$(($(tail -n +$VAR_WWW_LINE /etc/apache2/apache2.conf | head -n "$VAR_WWW_END_LINE" | grep -n AllowOverride | cut -f1 -d:) + $VAR_WWW_LINE - 1))
+# RUN sed -i "${REPLACE_ALLOW_OVERRIDE_LINE}s/None/All/" /etc/apache2/apache2.conf
 
-# Remove contents of the HTML directory
-RUN rm -rf /var/www/html/*
+# # Configure PHP error reporting
+# RUN sed -i 's/^error_reporting.*/error_reporting = E_ALL/g' /etc/php/8.0/apache2/php.ini
+# RUN sed -i 's/^display_errors.*/display_errors = On/g' /etc/php/8.0/apache2/php.ini
 
-RUN git clone https://github.com/babanski/mutillidae.git /var/www/html/ && \
-    sed -i 's/^Deny from all/Allow from all/g' /var/www/html/.htaccess
+# # Remove contents of the HTML directory
+# RUN rm -rf /var/www/html/*
+
+# RUN git clone https://github.com/babanski/mutillidae.git /var/www/html/ && \
+#     sed -i 's/^Deny from all/Allow from all/g' /var/www/html/.htaccess
 
 
-WORKDIR /archie/mutillidae
-COPY . /archie/mutillidae
+# WORKDIR /archie/mutillidae
+# COPY . /archie/mutillidae
 
-RUN apt update
-RUN apt install sudo
-# RUN bash ./mysql_setup.sh
-# service mysql start && 
-EXPOSE 80 443
-# CMD ["bash", "-c", "service apache2 start && sleep infinity & wait"]
-CMD ["bash", "-c", "service mysql start && service apache2 start && sleep infinity & wait"]
+# RUN apt update
+# RUN apt install sudo
+# # RUN bash ./mysql_setup.sh
+# # service mysql start && 
+# EXPOSE 80 443
+# # CMD ["bash", "-c", "service apache2 start && sleep infinity & wait"]
+# CMD ["bash", "-c", "service mysql start && service apache2 start && sleep infinity & wait"]
