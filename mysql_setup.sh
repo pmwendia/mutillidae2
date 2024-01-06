@@ -78,7 +78,7 @@ DEFAULTPASS="mutillidae"
 
 #set some config to avoid prompting
 sudo debconf-set-selections <<EOF
-mysql-apt-config mysql-apt-config/select-server select mysql-5.7
+mysql-apt-config mysql-apt-config/select-server select mysql-8.0
 mysql-community-server mysql-community-server/root-pass password $DEFAULTPASS
 mysql-community-server mysql-community-server/re-root-pass password $DEFAULTPASS
 EOF
