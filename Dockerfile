@@ -1,7 +1,7 @@
 # FROM debian:buster
 
 # LABEL version 1.0
-# LABEL description "Mutillidae with Buster, Apache, and PHP 7.3"
+# LABEL description "Mutillidae with Buster, Apache, and PHP 8.0"
 
 # ARG DEBIAN_FRONTEND=noninteractive
 
@@ -19,7 +19,7 @@
 # RUN apt-get update
 
 # # Install Apache and PHP
-# RUN apt-get install -y apache2 dnsutils libapache2-mod-php7.3 php7.3 php7.3-mysql php7.3-curl php7.3-mbstring php7.3-xml
+# RUN apt-get install -y apache2 dnsutils libapache2-mod-php8.0 php8.0 php8.0-mysql php8.0-curl php8.0-mbstring php8.0-xml
 
 # # Install PHP development tools
 # RUN apt-get install -y php-dev gcc make autoconf libc-dev pkg-config
@@ -27,7 +27,7 @@
 # RUN apt-get -y install libmcrypt-dev
 
 # RUN pecl install mcrypt-1.0.2
-# RUN echo 'extension=mcrypt.so' >> /etc/php/7.3/apache2/php.ini
+# RUN echo 'extension=mcrypt.so' >> /etc/php/8.0/apache2/php.ini
 
 # # Clean up
 # RUN rm -rf /var/lib/apt/lists/*
@@ -42,8 +42,8 @@
 # RUN sed -i "${REPLACE_ALLOW_OVERRIDE_LINE}s/None/All/" /etc/apache2/apache2.conf
 
 # # Configure PHP error reporting
-# RUN sed -i 's/^error_reporting.*/error_reporting = E_ALL/g' /etc/php/7.3/apache2/php.ini
-# RUN sed -i 's/^display_errors.*/display_errors = On/g' /etc/php/7.3/apache2/php.ini
+# RUN sed -i 's/^error_reporting.*/error_reporting = E_ALL/g' /etc/php/8.0/apache2/php.ini
+# RUN sed -i 's/^display_errors.*/display_errors = On/g' /etc/php/8.0/apache2/php.ini
 
 # # Remove contents of the HTML directory
 # RUN rm -rf /var/www/html/*
@@ -61,7 +61,7 @@ FROM debian:bullseye
 RUN echo 'deb http://deb.debian.org/debian bullseye-backports main' > /etc/apt/sources.list.d/backports.list
 
 LABEL version 1.0
-LABEL description "Mutillidae with Buster, Apache, and PHP 7.3"
+LABEL description "Mutillidae with Buster, Apache, and PHP 8.0"
 
 ARG DEBIAN_FRONTEND=noninteractive
 
@@ -81,10 +81,10 @@ RUN apt-get update
 # generate locales
 # RUN locale-gen en_US.UTF-8 ru_RU.UTF-8
 
-RUN apt-add-repository -y ppa:ondrej/php
+# RUN apt-add-repository -y ppa:ondrej/php
 
 # Install Apache and PHP
-RUN apt-get install -y apache2 dnsutils libapache2-mod-php7.3 php7.3 php7.3-mysql php7.3-curl php7.3-mbstring php7.3-xml
+RUN apt-get install -y apache2 dnsutils libapache2-mod-php8.0 php8.0 php8.0-mysql php8.0-curl php8.0-mbstring php8.0-xml
 
 # Install PHP development tools
 RUN apt-get install -y php-dev gcc make autoconf libc-dev pkg-config
@@ -92,7 +92,7 @@ RUN apt-get install -y php-dev gcc make autoconf libc-dev pkg-config
 RUN apt-get -y install libmcrypt-dev
 
 RUN pecl install mcrypt-1.0.2
-RUN echo 'extension=mcrypt.so' >> /etc/php/7.3/apache2/php.ini
+RUN echo 'extension=mcrypt.so' >> /etc/php/8.0/apache2/php.ini
 
 # Clean up
 RUN rm -rf /var/lib/apt/lists/*
@@ -107,8 +107,8 @@ RUN REPLACE_ALLOW_OVERRIDE_LINE=$(($(tail -n +$VAR_WWW_LINE /etc/apache2/apache2
 RUN sed -i "${REPLACE_ALLOW_OVERRIDE_LINE}s/None/All/" /etc/apache2/apache2.conf
 
 # Configure PHP error reporting
-RUN sed -i 's/^error_reporting.*/error_reporting = E_ALL/g' /etc/php/7.3/apache2/php.ini
-RUN sed -i 's/^display_errors.*/display_errors = On/g' /etc/php/7.3/apache2/php.ini
+RUN sed -i 's/^error_reporting.*/error_reporting = E_ALL/g' /etc/php/8.0/apache2/php.ini
+RUN sed -i 's/^display_errors.*/display_errors = On/g' /etc/php/8.0/apache2/php.ini
 
 # Remove contents of the HTML directory
 RUN rm -rf /var/www/html/*
