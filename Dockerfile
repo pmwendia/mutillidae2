@@ -69,24 +69,24 @@ ARG DEBIAN_FRONTEND=noninteractive
 # Update and upgrade
 RUN apt-get update && apt-get upgrade -y
 
-RUN apt-get search php8.1
+# RUN apt search php8.1
 
-# # Install basic utilities
-# RUN apt-get install -y dialog apt-utils git ssh lsb-release apt-transport-https ca-certificates wget curl pwgen gnupg
+# Install basic utilities
+RUN apt-get install -y dialog apt-utils git ssh lsb-release apt-transport-https ca-certificates wget curl pwgen gnupg
 
-# # Install software-properties-common
-# RUN apt-get install -y software-properties-common
+# Install software-properties-common
+RUN apt-get install -y software-properties-common
 
-# # Update again
-# RUN apt-get update
+# Update again
+RUN apt-get update
 
-# # generate locales
-# # RUN locale-gen en_US.UTF-8 ru_RU.UTF-8
+# generate locales
+# RUN locale-gen en_US.UTF-8 ru_RU.UTF-8
 
-# # RUN apt-add-repository -y ppa:ondrej/php
+# RUN apt-add-repository -y ppa:ondrej/php
 
-# # Install Apache and PHP
-# RUN apt-get install -y apache2 dnsutils libapache2-mod-php8.1 php8.1 php8.1-mysql php8.1-curl php8.1-mbstring php8.1-xml
+# Install Apache and PHP
+RUN apt-get install -y apache2 dnsutils libapache2-mod-php8.1 php8.1 php8.1-mysql php8.1-curl php8.1-mbstring php8.1-xml
 
 # # Install PHP development tools
 # RUN apt-get install -y php-dev gcc make autoconf libc-dev pkg-config
