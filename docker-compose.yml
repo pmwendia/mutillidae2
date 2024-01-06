@@ -24,7 +24,7 @@ version: '3'
 
 services:
   db:
-    image: mysql:5.7
+    image: mysql:latest
     hostname: mutillidae-db.local
     environment:
       MYSQL_ROOT_PASSWORD: mutillidae

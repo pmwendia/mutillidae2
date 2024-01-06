@@ -57,7 +57,8 @@
 # EXPOSE 80 443
 # CMD ["bash", "-c", "service mysql start && service apache2 start && sleep infinity & wait"]
 
-FROM debian:latest
+FROM debian:bullseye
+RUN echo 'deb http://deb.debian.org/debian bullseye-backports main' > /etc/apt/sources.list.d/backports.list
 
 LABEL version 1.0
 LABEL description "Mutillidae with Buster, Apache, and PHP 7.3"
@@ -116,8 +117,8 @@ COPY . /archie/mutillidae
 
 RUN apt update
 RUN apt install sudo
-RUN bash ./mysql_setup.sh
+# RUN bash ./mysql_setup.sh
 # service mysql start && 
 EXPOSE 80 443
-CMD ["bash", "-c", "service apache2 start && sleep infinity & wait"]
-# CMD ["bash", "-c", "service mysql start && service apache2 start && sleep infinity & wait"]
+# CMD ["bash", "-c", "service apache2 start && sleep infinity & wait"]
+CMD ["bash", "-c", "service mysql start && service apache2 start && sleep infinity & wait"]
