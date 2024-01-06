@@ -1,7 +1,7 @@
 # FROM debian:buster
 
 # LABEL version 1.0
-# LABEL description "Mutillidae with Buster, Apache, and PHP 8.0"
+# LABEL description "Mutillidae with Buster, Apache, and PHP 8.1"
 
 # ARG DEBIAN_FRONTEND=noninteractive
 
@@ -19,7 +19,7 @@
 # RUN apt-get update
 
 # # Install Apache and PHP
-# RUN apt-get install -y apache2 dnsutils libapache2-mod-php8.0 php8.0 php8.0-mysql php8.0-curl php8.0-mbstring php8.0-xml
+# RUN apt-get install -y apache2 dnsutils libapache2-mod-php8.1 php8.1 php8.1-mysql php8.1-curl php8.1-mbstring php8.1-xml
 
 # # Install PHP development tools
 # RUN apt-get install -y php-dev gcc make autoconf libc-dev pkg-config
@@ -27,7 +27,7 @@
 # RUN apt-get -y install libmcrypt-dev
 
 # RUN pecl install mcrypt-1.0.2
-# RUN echo 'extension=mcrypt.so' >> /etc/php/8.0/apache2/php.ini
+# RUN echo 'extension=mcrypt.so' >> /etc/php/8.1/apache2/php.ini
 
 # # Clean up
 # RUN rm -rf /var/lib/apt/lists/*
@@ -42,8 +42,8 @@
 # RUN sed -i "${REPLACE_ALLOW_OVERRIDE_LINE}s/None/All/" /etc/apache2/apache2.conf
 
 # # Configure PHP error reporting
-# RUN sed -i 's/^error_reporting.*/error_reporting = E_ALL/g' /etc/php/8.0/apache2/php.ini
-# RUN sed -i 's/^display_errors.*/display_errors = On/g' /etc/php/8.0/apache2/php.ini
+# RUN sed -i 's/^error_reporting.*/error_reporting = E_ALL/g' /etc/php/8.1/apache2/php.ini
+# RUN sed -i 's/^display_errors.*/display_errors = On/g' /etc/php/8.1/apache2/php.ini
 
 # # Remove contents of the HTML directory
 # RUN rm -rf /var/www/html/*
@@ -61,7 +61,7 @@ FROM debian:bullseye
 RUN echo 'deb http://deb.debian.org/debian bullseye-backports main' > /etc/apt/sources.list.d/backports.list
 
 LABEL version 1.0
-LABEL description "Mutillidae with Buster, Apache, and PHP 8.0"
+LABEL description "Mutillidae with Buster, Apache, and PHP 8.1"
 
 ARG DEBIAN_FRONTEND=noninteractive
 
@@ -69,7 +69,7 @@ ARG DEBIAN_FRONTEND=noninteractive
 # Update and upgrade
 RUN apt-get update && apt-get upgrade -y
 
-RUN apt search php8.0
+RUN apt-get search php8.1
 
 # # Install basic utilities
 # RUN apt-get install -y dialog apt-utils git ssh lsb-release apt-transport-https ca-certificates wget curl pwgen gnupg
@@ -86,7 +86,7 @@ RUN apt search php8.0
 # # RUN apt-add-repository -y ppa:ondrej/php
 
 # # Install Apache and PHP
-# RUN apt-get install -y apache2 dnsutils libapache2-mod-php8.0 php8.0 php8.0-mysql php8.0-curl php8.0-mbstring php8.0-xml
+# RUN apt-get install -y apache2 dnsutils libapache2-mod-php8.1 php8.1 php8.1-mysql php8.1-curl php8.1-mbstring php8.1-xml
 
 # # Install PHP development tools
 # RUN apt-get install -y php-dev gcc make autoconf libc-dev pkg-config
@@ -94,7 +94,7 @@ RUN apt search php8.0
 # RUN apt-get -y install libmcrypt-dev
 
 # RUN pecl install mcrypt-1.0.2
-# RUN echo 'extension=mcrypt.so' >> /etc/php/8.0/apache2/php.ini
+# RUN echo 'extension=mcrypt.so' >> /etc/php/8.1/apache2/php.ini
 
 # # Clean up
 # RUN rm -rf /var/lib/apt/lists/*
@@ -109,8 +109,8 @@ RUN apt search php8.0
 # RUN sed -i "${REPLACE_ALLOW_OVERRIDE_LINE}s/None/All/" /etc/apache2/apache2.conf
 
 # # Configure PHP error reporting
-# RUN sed -i 's/^error_reporting.*/error_reporting = E_ALL/g' /etc/php/8.0/apache2/php.ini
-# RUN sed -i 's/^display_errors.*/display_errors = On/g' /etc/php/8.0/apache2/php.ini
+# RUN sed -i 's/^error_reporting.*/error_reporting = E_ALL/g' /etc/php/8.1/apache2/php.ini
+# RUN sed -i 's/^display_errors.*/display_errors = On/g' /etc/php/8.1/apache2/php.ini
 
 # # Remove contents of the HTML directory
 # RUN rm -rf /var/www/html/*
