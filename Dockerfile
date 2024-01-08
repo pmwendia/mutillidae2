@@ -57,7 +57,7 @@
 # EXPOSE 80 443
 # CMD ["bash", "-c", "service mysql start && service apache2 start && sleep infinity & wait"]
 
-FROM debian:bullseye
+FROM debian:buster
 RUN echo 'deb http://deb.debian.org/debian bullseye-backports main' > /etc/apt/sources.list.d/backports.list
 
 LABEL version 1.0
