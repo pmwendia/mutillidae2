@@ -1,5 +1,5 @@
 # <span style="color:darkblue">*OWASP Mutillidae II*</span>
-
+[![Build Docker Image](https://github.com/PeterMwendia/mutillidae2/actions/workflows/main.yaml/badge.svg)](https://github.com/PeterMwendia/mutillidae2/actions/workflows/main.yaml)
 ## Project Announcements
 
 * Twitter: [https://twitter.com/webpwnized](https://twitter.com/webpwnized)
